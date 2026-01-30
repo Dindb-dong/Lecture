@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응용통계 x CS 멘토링</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        :root {
+            --primary: #0f172a;
+            --accent: #38bdf8;
+            --text: #f8fafc;
+            --gray: #94a3b8;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            height: 100%; overflow: hidden;
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+        }
+
+        /* 슬라이드 레이아웃 */
+        .slider {
+            width: 100vw; height: 100vh;
+            display: flex; transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .slide {
+            min-width: 100vw; height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 2rem; box-sizing: border-box;
+            position: relative;
+        }
+
+        /* 인트로 애니메이션 스타일 */
+        #scramble-text {
+            font-size: 3.5rem; font-weight: 800;
+            text-align: center; line-height: 1.2;
+            min-height: 8rem; color: var(--accent);
+        }
+
+        .fade-in { opacity: 0; transition: opacity 1s ease-in; }
+        .visible { opacity: 1; }
+
+        /* 아코디언 스타일 */
+        .accordion {
+            width: 100%; max-width: 800px; margin-top: 1.5rem;
+        }
+        .accordion-item {
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 0.5rem; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .accordion-header {
+            padding: 1rem 1.5rem; cursor: pointer; font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.3s;
+        }
+        .accordion-header:hover { background: rgba(255,255,255,0.1); }
+        .accordion-content {
+            padding: 0 1.5rem; max-height: 0; overflow: hidden;
+            transition: all 0.4s ease; color: var(--gray); font-size: 1rem;
+        }
+        .accordion-item.active .accordion-content {
+            padding: 1rem 1.5rem; max-height: 300px; border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 진로 리스트 */
+        .job-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; max-width: 800px;
+        }
+        .job-card {
+            background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* 버튼 및 진행바 */
+        .nav-btns {
+            position: fixed; bottom: 2rem; right: 2rem; display: flex; gap: 1rem; z-index: 10;
+        }
+        button {
+            padding: 0.8rem 1.5rem; border: none; border-radius: 30px;
+            background: var(--accent); color: var(--primary);
+            cursor: pointer; font-weight: bold; font-size: 0.9rem;
+        }
+        .progress-bar {
+            position: fixed; top: 0; left: 0; height: 4px;
+            background: var(--accent); transition: width 0.3s; z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="bar"></div>
+
+<div class="slider" id="slider">
+    <div class="slide">
+        <div id="scramble-text">01011001 101010...</div>
+        <div id="intro-sub" class="fade-in" style="margin-top: 2rem; text-align: center;">
+            <h2 style="font-size: 1.8rem; color: var(--gray);">응용통계학 & 컴퓨터과학 멘토링</h2>
+            <p>통계적 직관과 공학적 기술의 완벽한 조화</p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 style="color:var(--accent)">📊 전공의 정체성</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">응용통계학: 데이터 사이언스의 심장 <span>▼</span></div>
+                <div class="accordion-content">단순한 통계를 넘어 머신러닝, 시계열 예측 등 '데이터'로 미래를 설계하는 학문입니다. 일반 통계보다 프로그래밍과 실전 데이터 분석에 더 가깝습니다.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">컴퓨터과학: 구현의 힘 <span>▼</span></div>
+                <div class="accordion-content">통계적 아이디어를 실제 서비스나 모델로 구현하기 위한 핵심 도구입니다. 운영체제, 네트워크, 알고리즘을 통해 시스템의 구조를 배웁니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 style="color:var(--accent)">📕 무엇을 배우나?</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">Applied Stats Track <span>▼</span></div>
+                <div class="accordion-content">수리통계학, 회귀분석을 넘어 데이터마이닝, 딥러닝 이론까지 학습합니다. (수학이 끊임없이 여러분을 괴롭힐 거예요!)</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">Computer Science Track <span>▼</span></div>
+                <div class="accordion-content">자료구조, 알고리즘, 데이터베이스, AI 시스템 아키텍처 등 효율적인 컴퓨팅 기술을 정복합니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 style="color:var(--accent)">🚀 졸업 후 필드</h2>
+        <div class="job-grid">
+            <div class="job-card">
+                <h3>ML Engineer</h3>
+                <p>통계 모델을 서비스에 직접 배포하고 관리합니다.</p>
+            </div>
+            <div class="job-card">
+                <h3>Data Scientist</h3>
+                <p>데이터에서 가치를 발견하고 비즈니스 의사결정을 돕습니다.</p>
+            </div>
+            <div class="job-card">
+                <h3>Quant / Fintech</h3>
+                <p>금융 데이터와 알고리즘으로 자산을 운용합니다.</p>
+            </div>
+            <div class="job-card">
+                <h3>SW Architect</h3>
+                <p>데이터 흐름을 고려한 견고한 소프트웨어를 설계합니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 style="color:var(--accent)">🤫 전공생만 아는 TMI</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header">통계학과 vs 수학과? <span>▼</span></div>
+                <div class="accordion-content">분명 통계학을 배우러 왔는데... 왜 해석학, 라플라스 변환, 푸리에 변환을 증명하고 있는지 자괴감이 들 때가 많습니다. 사실상 수학과 '시즌 2' 같은 느낌이죠.</div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">대학 교수님 vs 인도 유튜버 <span>▼</span></div>
+                <div class="accordion-content">컴퓨터과학 전공 수업에서 3주간 이해 못 한 내용을, 유튜브의 '인도 교수님'들이 10분 만에 해결해 주시는 기적을 매 학기 체험하게 됩니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2 style="font-size: 2.5rem;">이런 학생에게 추천!</h2>
+        <div style="text-align: left; line-height: 2;">
+            <p>✅ 수학 문제 풀 때보다 '데이터 분석' 결과 나올 때 더 짜릿한 분</p>
+            <p>✅ 이론을 넘어서 내 손으로 직접 코딩하고 배포하고 싶은 분</p>
+            <p>✅ "왜?"라는 수학적 질문과 "어떻게?"라는 공학적 질문을 동시에 던지는 분</p>
+        </div>
+        <h3 style="margin-top: 3rem; color: var(--accent);">함께 성장할 여러분을 기다립니다!</h3>
+    </div>
+</div>
+
+<div class="nav-btns">
+    <button onclick="moveSlide(-1)">PREV</button>
+    <button onclick="moveSlide(1)">NEXT</button>
+</div>
+
+<script>
+    // 1. 인트로 스크램블 애니메이션
+    const targetText = "데이터로 세상을 읽고\n코드로 구현하다";
+    const chars = "!<>-_\\/[]{}—=+*^?#________";
+    let container = document.getElementById('scramble-text');
+
+    function scramble(text) {
+        let frame = 0;
+        const speed = 2; // 속도 조절
+        const interval = setInterval(() => {
+            let current = text.split('').map((char, index) => {
+                if (char === '\n') return '<br>';
+                if (index < frame / speed) return char;
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+            
+            container.innerHTML = current;
+            if (frame / speed >= text.length) {
+                clearInterval(interval);
+                document.getElementById('intro-sub').classList.add('visible');
+            }
+            frame++;
+        }, 40);
+    }
+
+    // 2. 슬라이드 제어 로직
+    let currentIdx = 0;
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('.slide');
+    const bar = document.getElementById('bar');
+
+    function moveSlide(step) {
+        currentIdx = Math.max(0, Math.min(currentIdx + step, slides.length - 1));
+        slider.style.transform = `translateX(-${currentIdx * 100}vw)`;
+        bar.style.width = `${((currentIdx + 1) / slides.length) * 100}%`;
+    }
+
+    // 키보드 지원
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') moveSlide(1);
+        if (e.key === 'ArrowLeft') moveSlide(-1);
+    });
+
+    // 아코디언 제어
+    document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const item = header.parentElement;
+            item.classList.toggle('active');
+        });
+    });
+
+    // 초기 시작
+    window.onload = () => scramble(targetText);
+</script>
+
+</body>
+</html>
